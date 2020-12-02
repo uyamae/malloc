@@ -1,4 +1,9 @@
-﻿#include "allocator.h"
+﻿/**
+ * @file
+ * @brief メモリアロケータ
+ * @author ozaki-takayuki
+ */
+#include "allocator.h"
 #include <cstdint>
 #include <cassert>
 
@@ -13,13 +18,17 @@ struct Allocator::MCB {
 };
 // コンストラクタ
 Allocator::Allocator(void * addr, size_t size)
-    : freeList{ reinterpret_cast<MCB *>(addr) }
-    , usedList{ nullptr }
-    , addr{ addr }
+    : addr{ addr }
     , size{ size }
+    // 管理メモリ全体をひとつの空きメモリブロックにする
+    , freeList{ reinterpret_cast<MCB *>(addr) }
+    // 使用リストは空にする
+    , usedList{ nullptr }
 {
+    // 空きメモリブロックの初期化
     freeList->prev = nullptr;
     freeList->next = nullptr;
+    // 使用できるサイズは管理サイズ全体からMCB サイズを引いたもの
     freeList->size = size - sizeof(MCB);
 }
 // デストラクタ

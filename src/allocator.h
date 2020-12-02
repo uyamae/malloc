@@ -1,4 +1,9 @@
-﻿#pragma once
+﻿/**
+ * @file
+ * @brief メモリアロケータ
+ * @author ozaki-takayuki
+ */
+#pragma once
 
 /**
  * @brief メモリアロケータ
@@ -28,8 +33,8 @@ private:
     /// Memocy Control Block 構造体宣言
     struct MCB;
     
-    MCB * freeList; ///< 空きメモリブロックリストの先頭
-    MCB * usedList; ///< 使用中メモリブロックリストの先頭
     void * addr;    ///< 管理しているメモリの先頭アドレス
     size_t size;    ///< 管理しているメモリのサイズ
+    MCB * freeList; ///< 空きメモリブロックリストの先頭
+    MCB * usedList; ///< 使用中メモリブロックリストの先頭
 };
